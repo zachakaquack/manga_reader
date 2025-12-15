@@ -37,6 +37,11 @@ class ReaderView(QFrame):
         )
 
         self.top_bar = ReaderTopBar()
+        self.page = MangaPage()
+        self.side_bar = SideBar()
+
+        self.top_bar.open_menu_button.connect(self._toggle_menu)
+
         self.main_layout.addWidget(self.top_bar)
 
         # thge layout that holds the main page and the menu
@@ -45,13 +50,16 @@ class ReaderView(QFrame):
         self.bottom_layout.setSpacing(0)
 
         # TODO: make sure to change between manhwas and mangas
-        self.page = MangaPage()
+
         self.bottom_layout.addWidget(self.page)
-
-        self.side_bar = SideBar()
         self.bottom_layout.addWidget(self.side_bar)
-
         self.main_layout.addLayout(self.bottom_layout)
+
+    def _toggle_menu(self) -> None:
+        if self.side_bar.isHidden():
+            self.side_bar.show()
+        else:
+            self.side_bar.hide()
 
     def keyPressEvent(self, event: QKeyEvent, /) -> None:
 
