@@ -55,4 +55,8 @@ class ScrollerPage(QScrollArea):
         self.main_layout.addSpacing(20)
         button = Button("Next Chapter")
         self.main_layout.addWidget(button, alignment=Qt.AlignmentFlag.AlignCenter)
-        self.main_layout.addSpacing(20)
+
+        # add some extra spacing to both the page number updates, and you have the ability
+        # to now only see the last page if you want to
+        magic_height_spacing = scaled_pixmaps[-1].height() // 2
+        self.main_layout.addSpacing(magic_height_spacing)
