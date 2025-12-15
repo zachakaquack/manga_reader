@@ -3,7 +3,8 @@ from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 
 from settings.loader import load_settings
-from widgets.reader.manga.manga_view import ReaderView
+from widgets.reader.manga.manga_view import MangaView
+from widgets.reader.scroller.scroll_view import ScrollerView
 
 
 class Interface(QFrame):
@@ -32,7 +33,8 @@ class Interface(QFrame):
             Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
         )
 
-        self.manga_view = ReaderView()
+        # self.manga_view = MangaView()
+        self.manga_view = ScrollerView()
         self.main_layout.addWidget(self.manga_view)
 
         self.manga_view.load_manga(
