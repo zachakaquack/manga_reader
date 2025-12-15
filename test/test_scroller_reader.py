@@ -27,7 +27,6 @@ class TestScrollerReaderModel(unittest.TestCase):
         # pixels should be (index + 1) * 5000
         one_image_height = self.model._images_scaled[0].height()
         target_pixels = one_image_height * (self.model.page_number_index + 1)
-        print(one_image_height, target_pixels)
         self.assertEqual(target_pixels, self.model.next_page())
 
     def test_decrementPageNumberPixelsScrolledScrollerReader(self):
