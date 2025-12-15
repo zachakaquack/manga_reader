@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-class MangaReaderModel:
+class ReaderModel:
     def __init__(self):
 
         self.page_number_index: int = 0

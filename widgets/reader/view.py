@@ -3,15 +3,15 @@ from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
 from widgets.general.reader_top_bar import ReaderTopBar
 from pathlib import Path
-from widgets.manga_reader.model import MangaReaderModel
-from widgets.manga_reader.page import Page
+from widgets.reader.model import ReaderModel
+from widgets.reader.page import Page
 
-class MangaReaderView(QFrame):
+class ReaderView(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
         # the model holds all the data; this class only holds the gui stuff
-        self.model = MangaReaderModel()
+        self.model = ReaderModel()
 
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 

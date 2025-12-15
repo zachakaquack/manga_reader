@@ -1,10 +1,10 @@
 import unittest
 from pathlib import Path
-from widgets.manga_reader.model import MangaReaderModel
+from widgets.reader.model import ReaderModel
 
-class TestMangaReaderModel(unittest.TestCase):
+class TestReaderModel(unittest.TestCase):
     def setUp(self) -> None:
-        self.model = MangaReaderModel()
+        self.model = ReaderModel()
         self.model.image_paths = [Path.cwd()] * 3
         self.model.page_number_index = 1
 
