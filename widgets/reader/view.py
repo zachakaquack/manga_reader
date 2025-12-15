@@ -4,7 +4,7 @@ from settings.loader import load_settings
 from widgets.reader.top_bar import ReaderTopBar
 from pathlib import Path
 from widgets.reader.model import ReaderModel
-from widgets.reader.page import MangaPage
+from widgets.reader.manga_page import MangaPage
 from widgets.reader.side_bar import SideBar
 
 class ReaderView(QFrame):
