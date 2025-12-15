@@ -1,5 +1,5 @@
 from PySide6.QtCore import Signal
-from PySide6.QtGui import QStaticText, Qt
+from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy, QSpacerItem, QVBoxLayout
 from settings.loader import load_settings
 from widgets.components.button import Button
@@ -44,11 +44,11 @@ class ReaderTopBar(QFrame):
             )
         )
 
-        chapter = CountSlashTotal("Chapter", 100, 150)
-        page = CountSlashTotal("Page", 1, 20)
+        # self.chapter = CountSlashTotal("Chapter", 100, 150)
+        self.page = CountSlashTotal("Page", 1, 20)
 
-        self.main_layout.addWidget(chapter)
-        self.main_layout.addWidget(page)
+        # self.main_layout.addWidget(self.chapter)
+        self.main_layout.addWidget(self.page)
 
         menu_button = Button("Menu")
         menu_button.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
