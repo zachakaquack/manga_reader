@@ -10,6 +10,7 @@ class MangaReaderView(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
+        # the model holds all the data; this class only holds the gui stuff
         self.model = MangaReaderModel()
 
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
