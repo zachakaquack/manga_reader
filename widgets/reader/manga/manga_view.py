@@ -7,7 +7,7 @@ from widgets.reader.manga.manga_model import MangaModel
 from widgets.reader.manga.manga_page import MangaPage
 from widgets.reader.side_bar import SideBar
 
-class ReaderView(QFrame):
+class MangaView(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
@@ -96,6 +96,4 @@ class ReaderView(QFrame):
         self.model.load_manga(image_paths)
 
         self.top_bar.page.update_limit(len(image_paths))
-        self.image_paths = image_paths
-
-        self.page.change_page(image_paths[0])
+        self.page.change_page(self.model.image_paths[0])
