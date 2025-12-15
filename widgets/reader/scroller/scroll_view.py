@@ -80,7 +80,7 @@ class ScrollerView(QFrame):
             case Qt.Key.Key_D:
                 self._next_page()
 
-            case Qt.Key.Key_Tab:
+            case Qt.Key.Key_Return:
                 self._toggle_menu()
 
 
