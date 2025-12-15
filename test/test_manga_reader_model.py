@@ -9,6 +9,7 @@ class TestMangaReaderModel(unittest.TestCase):
         self.model.page_number_index = 1
 
     def test_incrementPageNumberValidMangaReader(self):
+        # simple increment from 1 -> 2
         target = self.model.page_number_index + 1
         self.assertEqual(target, self.model.next_page())
 
@@ -18,6 +19,7 @@ class TestMangaReaderModel(unittest.TestCase):
         self.assertEqual(target, self.model.next_page())
 
     def test_decrementPageNumberValidMangaReader(self):
+        # simple decrement from 1 -> 0
         target = 0 
         self.assertEqual(target, self.model.prev_page())
 
