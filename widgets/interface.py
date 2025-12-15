@@ -3,7 +3,7 @@ from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 
 from settings.loader import load_settings
-from widgets.reader.view import ReaderView
+from widgets.reader.manga.manga_view import ReaderView
 
 
 class Interface(QFrame):

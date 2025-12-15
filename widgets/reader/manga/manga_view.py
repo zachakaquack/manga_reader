@@ -3,9 +3,8 @@ from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
 from widgets.reader.top_bar import ReaderTopBar
 from pathlib import Path
-from widgets.reader.model import ReaderModel
-from widgets.reader.manga_page import MangaPage
-from widgets.reader.scroller_page import ScrollerPage
+from widgets.reader.manga.manga_model import MangaModel
+from widgets.reader.manga.manga_page import MangaPage
 from widgets.reader.side_bar import SideBar
 
 class ReaderView(QFrame):
@@ -13,7 +12,7 @@ class ReaderView(QFrame):
         super().__init__(*args, *kwargs)
 
         # the model holds all the data; this class only holds the gui stuff
-        self.model = ReaderModel()
+        self.model = MangaModel()
         self.isManga: bool = False
 
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -38,12 +37,8 @@ class ReaderView(QFrame):
             Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
         )
 
-        # TODO: make sure to change between manhwas and mangas
         self.top_bar = ReaderTopBar()
-
-        # self.page = MangaPage()
-        self.page = ScrollerPage()
-
+        self.page = MangaPage()
         self.side_bar = SideBar()
 
         self.top_bar.open_menu_button.connect(self._toggle_menu)
@@ -100,7 +95,4 @@ class ReaderView(QFrame):
         self.top_bar.page.update_limit(len(image_paths))
         self.image_paths = image_paths
 
-        if(self.isManga):
-            self.page.change_page(image_paths[0])
-        else:
-            self.page.load_pages(image_paths)
+        self.page.change_page(image_paths[0])
