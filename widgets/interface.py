@@ -1,3 +1,4 @@
+from pathlib import Path
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 
@@ -33,3 +34,14 @@ class Interface(QFrame):
 
         self.manga_view = MangaReaderView()
         self.main_layout.addWidget(self.manga_view)
+
+        self.manga_view.load_manga(
+            [
+                Path("/home/zach/Pictures/bgs/adachi.jpeg"),
+                Path("/home/zach/Pictures/bgs/adachi2.jpeg"),
+                Path("/home/zach/Pictures/bgs/adachi3.jpg"),
+                Path("/home/zach/Pictures/bgs/adachi4.jpg"),
+                Path("/home/zach/Pictures/bgs/adachi5.jpg"),
+                Path("/home/zach/Pictures/bgs/adachi6.jpg"),
+            ]
+        )
