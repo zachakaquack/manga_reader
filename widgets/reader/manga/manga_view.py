@@ -74,6 +74,9 @@ class ReaderView(QFrame):
             case Qt.Key.Key_D:
                 self._next_page()
 
+            case Qt.Key.Key_Tab:
+                self._toggle_menu()
+
 
         return super().keyPressEvent(event)
 
