@@ -15,7 +15,7 @@ class ReaderTopBar(QFrame):
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
         settings = load_settings()
-        self.setFixedHeight(settings.reader.reader_top_bar_height)
+        self.setFixedHeight(settings.reader.top_bar_height)
 
         self.setObjectName("reader_top_bar")
         self.setStyleSheet(
