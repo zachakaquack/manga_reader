@@ -3,14 +3,14 @@ from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
 from widgets.general.reader_top_bar import ReaderTopBar
 from pathlib import Path
+from widgets.manga_reader.model import MangaReaderModel
 from widgets.manga_reader.page import Page
 
 class MangaReaderView(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
-        self.page_number_index: int = 0
-        self.image_paths: list[Path] = []
+        self.model = MangaReaderModel()
 
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
@@ -56,29 +56,21 @@ class MangaReaderView(QFrame):
 
         return super().keyPressEvent(event)
 
-    def _next_page(self):
-        if(self.page_number_index >= len(self.image_paths) - 1):
-            return
+    def _next_page(self) -> int:
+        page_number_index = self.model.next_page()
+        self.page.change_page(self.model.image_paths[page_number_index])
+        self.top_bar.page.update_current(page_number_index + 1)
+        return page_number_index
 
-        self.page_number_index += 1
-        self.top_bar.page.update_current(self.page_number_index + 1)
-
-        self.page.change_page(self.image_paths[self.page_number_index])
-
-    def _prev_page(self):
-        if(self.page_number_index <= 0):
-            return
-
-        self.page_number_index -= 1
-        self.top_bar.page.update_current(self.page_number_index + 1)
-
-        self.page.change_page(self.image_paths[self.page_number_index])
+    def _prev_page(self) -> int:
+        page_number_index = self.model.prev_page()
+        self.page.change_page(self.model.image_paths[page_number_index])
+        self.top_bar.page.update_current(page_number_index + 1)
+        return page_number_index
 
     def load_manga(self, image_paths: list[Path]) -> None:
-        if(len(image_paths) < 1):
-            raise IndexError("Too few images:", len(image_paths))
+        self.model.load_manga(image_paths)
 
         self.top_bar.page.update_limit(len(image_paths))
-
         self.image_paths = image_paths
         self.page.change_page(image_paths[0])
