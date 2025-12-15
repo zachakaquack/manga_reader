@@ -13,7 +13,7 @@ class TestMangaReaderModel(unittest.TestCase):
         self.assertEqual(target, self.model.next_page())
 
     def test_incrementPageNumberInvalidMangaReader(self):
-        # should be 2 because it can't incremenet to the next page
+        # should be 2 because it can't increment to the next page
         target = 2 
         self.assertEqual(target, self.model.next_page())
 
@@ -22,5 +22,6 @@ class TestMangaReaderModel(unittest.TestCase):
         self.assertEqual(target, self.model.prev_page())
 
     def test_decrementPageNumberInvalidMangaReader(self):
+        # should be 0 because it can't decrement to the prev page
         target = 0 
         self.assertEqual(target, self.model.prev_page())
