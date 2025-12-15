@@ -1,9 +1,13 @@
 from pathlib import Path
-from PySide6.QtGui import QPixmap, QResizeEvent, Qt
+from PySide6.QtCore import Signal
+from PySide6.QtGui import QMouseEvent, QPixmap, QResizeEvent, Qt
 from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout
 
 
 class MangaPage(QFrame):
+
+    page_clicked = Signal(QMouseEvent)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
@@ -22,6 +26,10 @@ class MangaPage(QFrame):
 
         self.label = QLabel()
         self.main_layout.addWidget(self.label)
+
+    def mouseReleaseEvent(self, event: QMouseEvent, /) -> None:
+        self.page_clicked.emit(event)
+        return super().mouseReleaseEvent(event)
 
     def change_page(self, image_path: Path):
         pm = QPixmap(image_path)

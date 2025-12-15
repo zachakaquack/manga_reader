@@ -1,4 +1,4 @@
-from PySide6.QtGui import QKeyEvent, Qt
+from PySide6.QtGui import QKeyEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
 from widgets.reader.top_bar import ReaderTopBar
@@ -42,7 +42,7 @@ class MangaView(QFrame):
         self.side_bar = SideBar()
 
         self.top_bar.open_menu_button.connect(self._toggle_menu)
-
+        self.page.page_clicked.connect(self.evaluate_change_page_on_click)
         self.main_layout.addWidget(self.top_bar)
 
         # thge layout that holds the main page and the menu
@@ -54,6 +54,12 @@ class MangaView(QFrame):
         self.bottom_layout.addWidget(self.page)
         self.bottom_layout.addWidget(self.side_bar)
         self.main_layout.addLayout(self.bottom_layout)
+
+
+    def evaluate_change_page_on_click(self, event: QMouseEvent) -> int:
+        index = self.model.evaluate_change_page_on_click(event, self.page.width())
+        self._go_to_page_index(index)
+        return index
 
     def _toggle_menu(self) -> None:
         if self.side_bar.isHidden():
@@ -82,15 +88,17 @@ class MangaView(QFrame):
 
     def _next_page(self) -> int:
         page_number_index = self.model.next_page()
-        self.page.change_page(self.model.image_paths[page_number_index])
-        self.top_bar.page.update_current(page_number_index + 1)
+        self._go_to_page_index(page_number_index)
         return page_number_index
 
     def _prev_page(self) -> int:
         page_number_index = self.model.prev_page()
-        self.page.change_page(self.model.image_paths[page_number_index])
-        self.top_bar.page.update_current(page_number_index + 1)
+        self._go_to_page_index(page_number_index)
         return page_number_index
+
+    def _go_to_page_index(self, index: int) -> None:
+        self.page.change_page(self.model.image_paths[index])
+        self.top_bar.page.update_current(index + 1)
 
     def load_manga(self, image_paths: list[Path]) -> None:
         self.model.load_manga(image_paths)

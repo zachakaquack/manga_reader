@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from PySide6.QtGui import QMouseEvent
+
 
 class MangaModel:
     def __init__(self):
@@ -25,3 +27,10 @@ class MangaModel:
             raise IndexError("Too few images:", len(image_paths))
 
         return image_paths
+
+    def evaluate_change_page_on_click(self, event: QMouseEvent, width: int) -> int:
+        start_of_right_half = width // 2
+        if event.pos().x() > start_of_right_half:
+            return self.next_page()
+        else:
+            return self.prev_page()
