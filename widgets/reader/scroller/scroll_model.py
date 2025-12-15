@@ -13,6 +13,14 @@ class ScrollerModel:
 
         self.pixmaps: list[QPixmap] = []
         self.scaled_pixmaps: list[QPixmap] = []
+        self.ranges: list[int] = []
+
+    def evaluate_scrolled_page_index(self, scrolled_pixels: int) -> int:
+        for i, image_bottom in enumerate(self.ranges):
+            if scrolled_pixels < image_bottom:
+                self.page_number_index = i
+                return i
+        return 0
 
     def next_page(self) -> int:
         if self.page_number_index + 1 < len(self.image_paths):
@@ -40,7 +48,8 @@ class ScrollerModel:
             pixmap = QPixmap(path)
             self.pixmaps.append(pixmap)
 
-            # TODO: fix magic number
+            # TODO: fix magic number (1000)
+            # 1000 fits whether you have the menu open or not
             scaled = pixmap.scaled(
                 QSize(1000, 12345),
                 aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
@@ -48,6 +57,12 @@ class ScrollerModel:
             )
 
             self.scaled_pixmaps.append(scaled)
+
+            if len(self.ranges) < 1:
+                previous = 0
+            else:
+                previous = self.ranges[-1]
+            self.ranges.append(previous + scaled.height())
 
         return (self.pixmaps, self.scaled_pixmaps)
     

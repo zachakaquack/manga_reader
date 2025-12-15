@@ -42,7 +42,7 @@ class ScrollerView(QFrame):
         self.side_bar = SideBar()
 
         self.top_bar.open_menu_button.connect(self._toggle_menu)
-        # self.page.
+        self.page.scroll_amount_changed.connect(self.change_scrolled_page)
 
         self.main_layout.addWidget(self.top_bar)
 
@@ -55,6 +55,11 @@ class ScrollerView(QFrame):
         self.bottom_layout.addWidget(self.page)
         self.bottom_layout.addWidget(self.side_bar)
         self.main_layout.addLayout(self.bottom_layout)
+
+    def change_scrolled_page(self, scrolled_pixels: int) -> int:
+        new_index = self.model.evaluate_scrolled_page_index(scrolled_pixels)
+        self.top_bar.page.update_current(new_index + 1)
+        return new_index
 
     def _toggle_menu(self) -> None:
         if self.side_bar.isHidden():

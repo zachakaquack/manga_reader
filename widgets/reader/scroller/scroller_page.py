@@ -38,6 +38,7 @@ class ScrollerPage(QScrollArea):
 
         self.setWidget(self.main_widget)
         self.setWidgetResizable(True)
+        self.verticalScrollBar().valueChanged.connect(self.scroll_amount_changed)
 
     def scroll_to_value(self, value: int) -> None:
         self.verticalScrollBar().setValue(value)
