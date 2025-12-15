@@ -1,6 +1,6 @@
 # SCROLLER PAGE: THIS MEANS MANHWA AND MANWHA (both are scrolling)
 from PySide6.QtCore import Signal
-from PySide6.QtGui import QPixmap, Qt
+from PySide6.QtGui import QImage, QPixmap, Qt
 from PySide6.QtWidgets import QFrame, QLabel, QScrollArea, QSizePolicy, QVBoxLayout
 from widgets.components.button import Button
 
@@ -13,7 +13,7 @@ class ScrollerPage(QScrollArea):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
-        self._pixmaps: list[QPixmap] = []
+        self._images: list[QImage] = []
         self._pixmaps_scaled: list[QPixmap] = []
         self._pages: list[QLabel] = []
 
@@ -43,10 +43,13 @@ class ScrollerPage(QScrollArea):
     def scroll_to_value(self, value: int) -> None:
         self.verticalScrollBar().setValue(value)
 
-    def load_pages(self, scaled_pixmaps: list[QPixmap]):
-        for scaled in scaled_pixmaps:
+    def load_pages(self, scaled_images: list[QImage]):
+        self._images = scaled_images
+        for image in self._images:
+            pm = QPixmap.fromImage(image)
+
             page = QLabel()
-            page.setPixmap(scaled)
+            page.setPixmap(pm)
 
             self._pages.append(page)
             self.main_layout.addWidget(page)
@@ -58,5 +61,5 @@ class ScrollerPage(QScrollArea):
 
         # add some extra spacing to both the page number updates, and you have the ability
         # to now only see the last page if you want to
-        magic_height_spacing = scaled_pixmaps[-1].height() // 2
+        magic_height_spacing = self._images[-1].height() // 2
         self.main_layout.addSpacing(magic_height_spacing)

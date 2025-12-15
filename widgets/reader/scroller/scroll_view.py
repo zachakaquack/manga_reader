@@ -106,8 +106,8 @@ class ScrollerView(QFrame):
 
         # it's easier and more efficient to calculate all of the pm's inside this;
         # the get_pixels_to_image function requires the images themselves
-        _, scaled_pixmaps = self.model.create_pixmaps()
-        self.page.load_pages(scaled_pixmaps)
+        _, scaled_images = self.model.create_images()
+        self.page.load_pages(scaled_images)
         self.page.scroll_to_value(0)
 
         self.top_bar.page.update_limit(len(image_paths))

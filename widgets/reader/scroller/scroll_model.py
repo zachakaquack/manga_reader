@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QPixmap, Qt
+from PySide6.QtGui import QImage, Qt
 
 
 class ScrollerModel:
@@ -11,8 +11,8 @@ class ScrollerModel:
         self.current_pixels_scrolled: int = 0
         self.image_paths: list[Path] = []
 
-        self.pixmaps: list[QPixmap] = []
-        self.scaled_pixmaps: list[QPixmap] = []
+        self._images: list[QImage] = []
+        self._images_scaled: list[QImage] = []
         self.ranges: list[int] = []
 
     def evaluate_scrolled_page_index(self, scrolled_pixels: int) -> int:
@@ -43,20 +43,24 @@ class ScrollerModel:
 
         return image_paths
 
-    def create_pixmaps(self) -> tuple[list[QPixmap], list[QPixmap]]:
+    def create_images(self) -> tuple[list[QImage], list[QImage]]:
+        if len(self.image_paths) < 1:
+            raise IndexError("Too few images:", len(self.image_paths))
+
         for path in self.image_paths:
-            pixmap = QPixmap(path)
-            self.pixmaps.append(pixmap)
+            image = QImage(path)
+            self._images.append(image)
 
             # TODO: fix magic number (1000)
             # 1000 fits whether you have the menu open or not
-            scaled = pixmap.scaled(
+            # 1000 because the width() of the widget is not set at runtime
+            scaled = image.scaled(
                 QSize(1000, 12345),
                 aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
                 mode=Qt.TransformationMode.FastTransformation
             )
 
-            self.scaled_pixmaps.append(scaled)
+            self._images_scaled.append(scaled)
 
             if len(self.ranges) < 1:
                 previous = 0
@@ -64,12 +68,12 @@ class ScrollerModel:
                 previous = self.ranges[-1]
             self.ranges.append(previous + scaled.height())
 
-        return (self.pixmaps, self.scaled_pixmaps)
+        return self._images, self._images_scaled
     
     def get_pixels_to_image_index(self, image_index: int) -> int:
         total_pixels = 0
         for i in range(len(self.image_paths)):
-            current_height = self.scaled_pixmaps[i].height()
+            current_height = self._images_scaled[i].height()
             if i == image_index:
                 return total_pixels
 
