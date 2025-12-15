@@ -10,3 +10,7 @@ def load_settings() -> Settings:
         _SETTINGS = Settings()
 
     return _SETTINGS
+
+def _reset_for_tests() -> None:
+    global _SETTINGS
+    _SETTINGS = None
