@@ -1,7 +1,7 @@
 from PySide6.QtGui import QKeyEvent, Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
-from widgets.general.reader_top_bar import ReaderTopBar
+from widgets.reader.top_bar import ReaderTopBar
 from pathlib import Path
 from widgets.reader.model import ReaderModel
 from widgets.reader.page import MangaPage
