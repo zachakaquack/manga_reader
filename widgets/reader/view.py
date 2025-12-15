@@ -5,6 +5,7 @@ from widgets.general.reader_top_bar import ReaderTopBar
 from pathlib import Path
 from widgets.reader.model import ReaderModel
 from widgets.reader.page import MangaPage
+from widgets.reader.side_bar import SideBar
 
 class ReaderView(QFrame):
     def __init__(self, *args, **kwargs):
@@ -46,6 +47,9 @@ class ReaderView(QFrame):
         # TODO: make sure to change between manhwas and mangas
         self.page = MangaPage()
         self.bottom_layout.addWidget(self.page)
+
+        self.side_bar = SideBar()
+        self.bottom_layout.addWidget(self.side_bar)
 
         self.main_layout.addLayout(self.bottom_layout)
 
