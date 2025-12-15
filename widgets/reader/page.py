@@ -3,7 +3,7 @@ from PySide6.QtGui import QPixmap, QResizeEvent, Qt
 from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout
 
 
-class Page(QFrame):
+class MangaPage(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
