@@ -36,6 +36,7 @@ class MangaPage(QFrame):
         self.label.setPixmap(self._pixmap_scaled)
 
         # TODO: cache the image
+        # remember, cache the image twice; once for the normal size, and another for the size with the side bar open
 
     def resizeEvent(self, event: QResizeEvent, /) -> None:
 
