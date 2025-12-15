@@ -5,8 +5,7 @@ _SETTINGS: Settings | None = None
 def load_settings() -> Settings:
     global _SETTINGS
     if _SETTINGS is None:
-        # TODO:
-        # implement reading from a file
+        # TODO: implement reading from a file
 
         _SETTINGS = Settings()
 
