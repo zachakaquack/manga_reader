@@ -33,17 +33,31 @@ class Interface(QFrame):
             Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
         )
 
-        # self.manga_view = MangaView()
-        self.manga_view = ScrollerView()
-        self.main_layout.addWidget(self.manga_view)
-
-        self.manga_view.load_manga(
-            [
-                Path("/home/zach/Pictures/bgs/adachi.jpeg"),
-                Path("/home/zach/Pictures/bgs/adachi2.jpeg"),
-                Path("/home/zach/Pictures/bgs/adachi3.jpg"),
-                Path("/home/zach/Pictures/bgs/adachi4.jpg"),
-                Path("/home/zach/Pictures/bgs/adachi5.jpg"),
-                Path("/home/zach/Pictures/bgs/adachi6.jpg"),
+        self.mangas = [
+                Path("./assets/test/manga_page.png"),
+                Path("./assets/test/manga_page.png"),
+                Path("./assets/test/manga_page.png"),
+                Path("./assets/test/manga_page.png"),
+                Path("./assets/test/manga_page.png"),
             ]
-        )
+        
+        self.scrollers = [
+                Path("./assets/test/scroller_page.png"),
+                Path("./assets/test/scroller_page.png"),
+                Path("./assets/test/scroller_page.png"),
+                Path("./assets/test/scroller_page.png"),
+                Path("./assets/test/scroller_page.png"),
+            ]
+
+        # self.load_scroller(self.scrollers)
+        self.load_manga(self.mangas)
+
+    def load_manga(self, image_paths: list[Path]):
+        view = MangaView()
+        view.load_manga(image_paths)
+        self.main_layout.addWidget(view)
+
+    def load_scroller(self, image_paths: list[Path]):
+        view = ScrollerView()
+        view.load_manga(image_paths)
+        self.main_layout.addWidget(view)
