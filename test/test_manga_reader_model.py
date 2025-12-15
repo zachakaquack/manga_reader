@@ -27,3 +27,13 @@ class TestMangaReaderModel(unittest.TestCase):
         # should be 0 because it can't decrement to the prev page
         target = 0 
         self.assertEqual(target, self.model.prev_page())
+
+    def test_notEnoughPagesWhenLoadingManga(self):
+        with self.assertRaises(IndexError):
+            self.model.load_manga([])
+
+    def test_loadsCorrectAmountOfManga(self):
+        target = 3
+        self.model.load_manga([Path.cwd()] * 3)
+
+        self.assertEqual(target, len(self.model.image_paths))
