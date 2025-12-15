@@ -1,10 +1,10 @@
 from PySide6.QtGui import QKeyEvent, Qt
-from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
 from widgets.general.reader_top_bar import ReaderTopBar
 from pathlib import Path
 from widgets.reader.model import ReaderModel
-from widgets.reader.page import Page
+from widgets.reader.page import MangaPage
 
 class ReaderView(QFrame):
     def __init__(self, *args, **kwargs):
@@ -38,8 +38,16 @@ class ReaderView(QFrame):
         self.top_bar = ReaderTopBar()
         self.main_layout.addWidget(self.top_bar)
 
-        self.page = Page()
-        self.main_layout.addWidget(self.page)
+        # thge layout that holds the main page and the menu
+        self.bottom_layout = QHBoxLayout()
+        self.bottom_layout.setContentsMargins(0, 0, 0, 0)
+        self.bottom_layout.setSpacing(0)
+
+        # TODO: make sure to change between manhwas and mangas
+        self.page = MangaPage()
+        self.bottom_layout.addWidget(self.page)
+
+        self.main_layout.addLayout(self.bottom_layout)
 
     def keyPressEvent(self, event: QKeyEvent, /) -> None:
 
