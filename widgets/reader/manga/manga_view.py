@@ -1,5 +1,6 @@
 from PySide6.QtGui import QKeyEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
+from widgets.reader.manga.bottom_bar import BottomBar
 from settings.loader import load_settings
 from widgets.reader.top_bar import ReaderTopBar
 from pathlib import Path
@@ -7,13 +8,13 @@ from widgets.reader.manga.manga_model import MangaModel
 from widgets.reader.manga.manga_page import MangaPage
 from widgets.reader.side_bar import SideBar
 
+
 class MangaView(QFrame):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
         # the model holds all the data; this class only holds the gui stuff
         self.model = MangaModel()
-        self.isManga: bool = False
 
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
@@ -22,8 +23,8 @@ class MangaView(QFrame):
         self.setStyleSheet(
             f"""
             #manga_reader_view{{
-                background-color: {settings.colors.main_background_color};
-                color: {settings.colors.main_text_color};
+                background-color: {settings.colors.main_background};
+                color: {settings.colors.main_text};
             }}
 
             """
@@ -40,21 +41,28 @@ class MangaView(QFrame):
         self.top_bar = ReaderTopBar()
         self.page = MangaPage()
         self.side_bar = SideBar()
+        self.bottom_bar = BottomBar()
 
         self.top_bar.open_menu_button.connect(self._toggle_menu)
         self.page.page_clicked.connect(self.evaluate_change_page_on_click)
         self.main_layout.addWidget(self.top_bar)
 
-        # thge layout that holds the main page and the menu
+        # thge layout that holds the main page, menu, and bottom bar
         self.bottom_layout = QHBoxLayout()
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
         self.bottom_layout.setSpacing(0)
 
+        # the layout the holds the main page and the bottom bar
+        self.page_bar_layout = QVBoxLayout()
+        self.page_bar_layout.setContentsMargins(0, 0, 0, 0)
+        self.page_bar_layout.setSpacing(0)
 
-        self.bottom_layout.addWidget(self.page)
+        self.page_bar_layout.addWidget(self.page)
+        self.page_bar_layout.addWidget(self.bottom_bar)
+        self.bottom_layout.addLayout(self.page_bar_layout)
         self.bottom_layout.addWidget(self.side_bar)
-        self.main_layout.addLayout(self.bottom_layout)
 
+        self.main_layout.addLayout(self.bottom_layout)
 
     def evaluate_change_page_on_click(self, event: QMouseEvent) -> int:
         index = self.model.evaluate_change_page_on_click(event, self.page.width())
@@ -83,7 +91,6 @@ class MangaView(QFrame):
             case Qt.Key.Key_Return:
                 self._toggle_menu()
 
-
         return super().keyPressEvent(event)
 
     def _next_page(self) -> int:
@@ -98,10 +105,14 @@ class MangaView(QFrame):
 
     def _go_to_page_index(self, index: int) -> None:
         self.page.change_page(self.model.image_paths[index])
+        self.bottom_bar.set_bar_filled_count(index + 1)
         self.top_bar.page.update_current(index + 1)
 
     def load_manga(self, image_paths: list[Path]) -> None:
         self.model.load_manga(image_paths)
 
         self.top_bar.page.update_limit(len(image_paths))
+        self.bottom_bar.set_bar_total_count(len(image_paths))
+        self.bottom_bar.set_bar_filled_count(1)
+
         self.page.change_page(self.model.image_paths[0])

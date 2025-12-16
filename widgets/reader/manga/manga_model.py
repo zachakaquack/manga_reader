@@ -23,7 +23,7 @@ class MangaModel:
 
     def load_manga(self, image_paths: list[Path]) -> list[Path]:
         self.image_paths = image_paths
-        if(len(image_paths) < 1):
+        if len(image_paths) < 1:
             raise IndexError("Too few images:", len(image_paths))
 
         return image_paths

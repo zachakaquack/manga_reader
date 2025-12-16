@@ -14,9 +14,7 @@ class MangaPage(QFrame):
         self._pixmap: QPixmap | None = None
         self._pixmap_scaled: QPixmap | None = None
 
-        self.setSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
-        )
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.main_layout = QVBoxLayout(self)
         self.setLayout(self.main_layout)
@@ -35,10 +33,10 @@ class MangaPage(QFrame):
         pm = QPixmap(image_path)
         self._pixmap = pm
 
-        self._pixmap_scaled= self._pixmap.scaled(
+        self._pixmap_scaled = self._pixmap.scaled(
             self.size(),
             aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
-            mode=Qt.TransformationMode.FastTransformation
+            mode=Qt.TransformationMode.FastTransformation,
         )
 
         self.label.setPixmap(self._pixmap_scaled)
@@ -50,10 +48,10 @@ class MangaPage(QFrame):
 
         # reload the first opening to get the actual scale
         if self._pixmap is not None:
-            self._pixmap_scaled= self._pixmap.scaled(
+            self._pixmap_scaled = self._pixmap.scaled(
                 self.size(),
                 aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
-                mode=Qt.TransformationMode.FastTransformation
+                mode=Qt.TransformationMode.FastTransformation,
             )
 
             self.label.setPixmap(self._pixmap_scaled)
