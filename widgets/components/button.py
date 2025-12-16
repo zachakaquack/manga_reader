@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QPushButton, QSizePolicy
+from PySide6.QtWidgets import QPushButton
 from settings.loader import load_settings
 
 
