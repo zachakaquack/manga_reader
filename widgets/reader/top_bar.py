@@ -21,11 +21,11 @@ class ReaderTopBar(QFrame):
         self.setStyleSheet(
             f"""
             #reader_top_bar{{
-                background-color: {settings.colors.reader_top_bar_background_color};
-                color: {settings.colors.main_text_color};
+                background-color: {settings.colors.reader_top_bar_background};
+                color: {settings.colors.main_text};
             }}
             QLabel{{
-                color: {settings.colors.main_text_color};
+                color: {settings.colors.main_text};
             }}
 
             """
