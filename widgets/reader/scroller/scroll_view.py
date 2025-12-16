@@ -1,3 +1,4 @@
+from PySide6.QtCore import Signal
 from PySide6.QtGui import QKeyEvent, Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
 from settings.loader import load_settings
@@ -9,6 +10,9 @@ from widgets.reader.side_bar import SideBar
 
 
 class ScrollerView(QFrame):
+
+    navigate_back = Signal()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
@@ -42,6 +46,8 @@ class ScrollerView(QFrame):
         self.side_bar = SideBar()
 
         self.top_bar.open_menu_button.connect(self._toggle_menu)
+        self.top_bar.navigate_back.connect(self.navigate_back.emit)
+
         self.page.scroll_amount_changed.connect(self.change_scrolled_page)
 
         self.main_layout.addWidget(self.top_bar)

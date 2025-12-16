@@ -43,12 +43,18 @@ class Interface(QFrame):
         self.home.load_manga.connect(self.load_manga)
         self.home.load_scroller.connect(self.load_scroller)
 
+        self.manga_view.navigate_back.connect(self.load_home)
+        self.scroller_view.navigate_back.connect(self.load_home)
+
         self.main_switcher.addSwitcher("home", self.home)
         self.main_switcher.addSwitcher("manga_view", self.manga_view)
         self.main_switcher.addSwitcher("scroller_view", self.scroller_view)
         self.main_switcher.setMainSwitch("home")
 
         self.main_layout.addWidget(self.main_switcher)
+
+    def load_home(self):
+        self.main_switcher.switchTo("home")
 
     def load_manga(self, image_paths: list[Path]):
         self.main_switcher.switchTo("manga_view")

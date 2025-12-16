@@ -1,6 +1,13 @@
 from PySide6.QtCore import Signal
 from PySide6.QtGui import Qt
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy, QSpacerItem, QVBoxLayout
+from PySide6.QtWidgets import (
+    QFrame,
+    QHBoxLayout,
+    QLabel,
+    QSizePolicy,
+    QSpacerItem,
+    QVBoxLayout,
+)
 from settings.loader import load_settings
 from widgets.components.button import Button
 
@@ -8,6 +15,7 @@ from widgets.components.button import Button
 class ReaderTopBar(QFrame):
 
     open_menu_button = Signal()
+    navigate_back = Signal()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
@@ -37,11 +45,15 @@ class ReaderTopBar(QFrame):
         self.main_layout.setSpacing(10)
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
+        back_button = Button("Back")
+        back_button.setSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding
+        )
+        back_button.clicked.connect(self.navigate_back.emit)
+        self.main_layout.addWidget(back_button)
+
         self.main_layout.addSpacerItem(
-            QSpacerItem(
-                1, 0,
-                hData=QSizePolicy.Policy.Expanding
-            )
+            QSpacerItem(1, 0, hData=QSizePolicy.Policy.Expanding)
         )
 
         # self.chapter = CountSlashTotal("Chapter", 100, 150)
@@ -51,7 +63,9 @@ class ReaderTopBar(QFrame):
         self.main_layout.addWidget(self.page)
 
         menu_button = Button("Menu")
-        menu_button.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        menu_button.setSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding
+        )
         menu_button.clicked.connect(self.open_menu_button)
         self.main_layout.addWidget(menu_button)
 
@@ -67,9 +81,7 @@ class CountSlashTotal(QFrame):
         self.current = current
         self.limit = limit
 
-        self.setSizePolicy(
-            QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
-        )
+        self.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout = QVBoxLayout(self)
         self.setLayout(self.main_layout)

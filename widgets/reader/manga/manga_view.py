@@ -1,3 +1,4 @@
+from PySide6.QtCore import Signal
 from PySide6.QtGui import QKeyEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QSizePolicy, QVBoxLayout
 from widgets.reader.manga.bottom_bar import BottomBar
@@ -10,6 +11,9 @@ from widgets.reader.side_bar import SideBar
 
 
 class MangaView(QFrame):
+
+    navigate_back = Signal()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
@@ -44,6 +48,8 @@ class MangaView(QFrame):
         self.bottom_bar = BottomBar()
 
         self.top_bar.open_menu_button.connect(self._toggle_menu)
+        self.top_bar.navigate_back.connect(self.navigate_back.emit)
+
         self.page.page_clicked.connect(self.evaluate_change_page_on_click)
         self.main_layout.addWidget(self.top_bar)
 
