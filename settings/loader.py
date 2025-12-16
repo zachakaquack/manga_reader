@@ -2,6 +2,7 @@ from settings.settings import Settings
 
 _SETTINGS: Settings | None = None
 
+
 def load_settings() -> Settings:
     global _SETTINGS
     if _SETTINGS is None:
@@ -10,6 +11,7 @@ def load_settings() -> Settings:
         _SETTINGS = Settings()
 
     return _SETTINGS
+
 
 def _reset_for_tests() -> None:
     global _SETTINGS

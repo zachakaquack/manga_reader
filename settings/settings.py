@@ -5,6 +5,7 @@ from settings.colors import Colors
 from settings.reader import Reader
 from settings.side_bar import SideBar
 
+
 @dataclass
 class Settings:
     # GENERAL
