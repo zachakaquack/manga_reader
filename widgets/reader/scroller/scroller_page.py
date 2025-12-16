@@ -25,9 +25,7 @@ class ScrollerPage(QScrollArea):
             """
         )
 
-        self.setSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
-        )
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.main_widget = QFrame(self)
         self.main_layout = QVBoxLayout()
@@ -53,7 +51,6 @@ class ScrollerPage(QScrollArea):
 
             self._pages.append(page)
             self.main_layout.addWidget(page)
-
 
         self.main_layout.addSpacing(20)
         button = Button("Next Chapter")

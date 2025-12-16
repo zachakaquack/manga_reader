@@ -5,8 +5,8 @@ from widgets.reader.scroller.scroll_model import ScrollerModel
 from widgets.reader.scroller.scroller_page import ScrollerPage
 from widgets.reader.top_bar import ReaderTopBar
 from pathlib import Path
-from widgets.reader.manga.manga_page import MangaPage
 from widgets.reader.side_bar import SideBar
+
 
 class ScrollerView(QFrame):
     def __init__(self, *args, **kwargs):
@@ -22,8 +22,8 @@ class ScrollerView(QFrame):
         self.setStyleSheet(
             f"""
             #scroller_reader_view{{
-                background-color: {settings.colors.main_background_color};
-                color: {settings.colors.main_text_color};
+                background-color: {settings.colors.main_background};
+                color: {settings.colors.main_text};
             }}
 
             """
@@ -50,7 +50,6 @@ class ScrollerView(QFrame):
         self.bottom_layout = QHBoxLayout()
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
         self.bottom_layout.setSpacing(0)
-
 
         self.bottom_layout.addWidget(self.page)
         self.bottom_layout.addWidget(self.side_bar)
@@ -83,7 +82,6 @@ class ScrollerView(QFrame):
             case Qt.Key.Key_Return:
                 self._toggle_menu()
 
-
         return super().keyPressEvent(event)
 
     def _next_page(self) -> int:
@@ -111,4 +109,3 @@ class ScrollerView(QFrame):
         self.page.scroll_to_value(0)
 
         self.top_bar.page.update_limit(len(image_paths))
-

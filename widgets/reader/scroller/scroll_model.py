@@ -38,7 +38,7 @@ class ScrollerModel:
 
     def load_manga(self, image_paths: list[Path]) -> list[Path]:
         self.image_paths = image_paths
-        if(len(image_paths) < 1):
+        if len(image_paths) < 1:
             raise IndexError("Too few images:", len(image_paths))
 
         return image_paths
@@ -57,7 +57,7 @@ class ScrollerModel:
             scaled = image.scaled(
                 QSize(1000, 12345),
                 aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
-                mode=Qt.TransformationMode.FastTransformation
+                mode=Qt.TransformationMode.FastTransformation,
             )
 
             self._images_scaled.append(scaled)
@@ -69,7 +69,7 @@ class ScrollerModel:
             self.ranges.append(previous + scaled.height())
 
         return self._images, self._images_scaled
-    
+
     def get_pixels_to_image_index(self, image_index: int) -> int:
         total_pixels = 0
         for i in range(len(self.image_paths)):
