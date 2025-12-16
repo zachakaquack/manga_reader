@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 from widgets.reader.manga.manga_model import MangaModel
 
+
 class TestMangaReaderModel(unittest.TestCase):
     def setUp(self) -> None:
         self.model = MangaModel()
@@ -15,17 +16,17 @@ class TestMangaReaderModel(unittest.TestCase):
 
     def test_incrementPageNumberInvalidMangaReader(self):
         # should be 2 because it can't increment to the next page
-        target = 2 
+        target = 2
         self.assertEqual(target, self.model.next_page())
 
     def test_decrementPageNumberValidMangaReader(self):
         # simple decrement from 1 -> 0
-        target = 0 
+        target = 0
         self.assertEqual(target, self.model.prev_page())
 
     def test_decrementPageNumberInvalidMangaReader(self):
         # should be 0 because it can't decrement to the prev page
-        target = 0 
+        target = 0
         self.assertEqual(target, self.model.prev_page())
 
     def test_notEnoughPagesWhenLoadingManga(self):

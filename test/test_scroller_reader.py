@@ -3,16 +3,27 @@ import copy
 from pathlib import Path
 from widgets.reader.scroller.scroll_model import ScrollerModel
 
+
 class TestScrollerReaderModel(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls._base_model = ScrollerModel()
         cls._base_model.image_paths = [
-            Path("/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"),
-            Path("/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"),
-            Path("/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"),
-            Path("/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"),
-            Path("/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"),
+            Path(
+                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
+            ),
+            Path(
+                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
+            ),
+            Path(
+                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
+            ),
+            Path(
+                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
+            ),
+            Path(
+                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
+            ),
         ]
         cls._base_model.page_number_index = 2
         cls._base_model.create_images()

@@ -2,6 +2,7 @@ import unittest
 from settings import settings
 from settings import loader
 
+
 class TestSettings(unittest.TestCase):
     def setUp(self) -> None:
         loader._reset_for_tests()
