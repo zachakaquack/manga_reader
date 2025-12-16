@@ -3,6 +3,8 @@ from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 
 from settings.loader import load_settings
+from widgets.home.home import Home
+from widgets.other.switcher import Switcher
 from widgets.reader.manga.manga_view import MangaView
 from widgets.reader.scroller.scroll_view import ScrollerView
 
@@ -33,31 +35,25 @@ class Interface(QFrame):
             Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
         )
 
-        self.mangas = [
-                Path("./assets/test/manga_page.png"),
-                Path("./assets/test/manga_page.png"),
-                Path("./assets/test/manga_page.png"),
-                Path("./assets/test/manga_page.png"),
-                Path("./assets/test/manga_page.png"),
-            ]
-        
-        self.scrollers = [
-                Path("./assets/test/scroller_page.png"),
-                Path("./assets/test/scroller_page.png"),
-                Path("./assets/test/scroller_page.png"),
-                Path("./assets/test/scroller_page.png"),
-                Path("./assets/test/scroller_page.png"),
-            ]
+        self.main_switcher = Switcher()
+        self.home = Home()
+        self.manga_view = MangaView()
+        self.scroller_view = ScrollerView()
 
-        # self.load_scroller(self.scrollers)
-        self.load_manga(self.mangas)
+        self.home.load_manga.connect(self.load_manga)
+        self.home.load_scroller.connect(self.load_scroller)
+
+        self.main_switcher.addSwitcher("home", self.home)
+        self.main_switcher.addSwitcher("manga_view", self.manga_view)
+        self.main_switcher.addSwitcher("scroller_view", self.scroller_view)
+        self.main_switcher.setMainSwitch("home")
+
+        self.main_layout.addWidget(self.main_switcher)
 
     def load_manga(self, image_paths: list[Path]):
-        view = MangaView()
-        view.load_manga(image_paths)
-        self.main_layout.addWidget(view)
+        self.main_switcher.switchTo("manga_view")
+        self.manga_view.load_manga(image_paths)
 
     def load_scroller(self, image_paths: list[Path]):
-        view = ScrollerView()
-        view.load_manga(image_paths)
-        self.main_layout.addWidget(view)
+        self.main_switcher.switchTo("scroller_view")
+        self.scroller_view.load_manga(image_paths)
