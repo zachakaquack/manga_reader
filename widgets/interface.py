@@ -18,8 +18,8 @@ class Interface(QFrame):
         self.setStyleSheet(
             f"""
             #interface{{
-                background-color: {settings.colors.main_background_color};
-                color: {settings.colors.main_text_color};
+                background-color: {settings.colors.main_background};
+                color: {settings.colors.main_text};
             }}
 
             """
