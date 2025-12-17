@@ -29,7 +29,7 @@ class PageChanger(QFrame):
         increment = Button(">")
 
         decrement.clicked.connect(self.decrement)
-        self.page_button.clicked.connect(lambda: self.switch_to_big_view.emit("page"))
+        self.page_button.clicked.connect(lambda: self.switch_to_big_view.emit("Page"))
         increment.clicked.connect(self.increment)
 
         # TODO: maybe change to not be fixed? has to be fixed due
