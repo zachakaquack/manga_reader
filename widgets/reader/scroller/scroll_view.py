@@ -52,6 +52,7 @@ class ScrollerView(QFrame):
 
         self.side_bar.prev_page.connect(self._prev_page)
         self.side_bar.next_page.connect(self._next_page)
+        self.side_bar.navigate_page_index.connect(self._go_to_page_index)
 
         self.main_layout.addWidget(self.top_bar)
 
@@ -65,16 +66,24 @@ class ScrollerView(QFrame):
         self.main_layout.addLayout(self.bottom_layout)
 
     def change_scrolled_page(self, scrolled_pixels: int) -> int:
-        new_index = self.model.evaluate_scrolled_page_index(scrolled_pixels)
-        self.top_bar.page.update_current(new_index + 1)
-        self.side_bar.change_page_in_changer(new_index + 1)
-        return new_index
+        index = self.model.evaluate_scrolled_page_index(scrolled_pixels)
+
+        # not using _go_to_page_index because it would cause an infinite loop
+        self.top_bar.page.update_current(index + 1)
+        self.side_bar.set_current_page_number(index + 1)
+        return index
 
     def _toggle_menu(self) -> None:
         if self.side_bar.isHidden():
             self.side_bar.show()
         else:
             self.side_bar.hide()
+
+    def _go_to_page_index(self, index: int):
+        self.top_bar.page.update_current(index + 1)
+        self.side_bar.set_current_page_number(index + 1)
+        pixels = self.model.get_pixels_to_image_index(index)
+        self.page.scroll_to_value(pixels)
 
     def keyPressEvent(self, event: QKeyEvent, /) -> None:
 
@@ -97,17 +106,13 @@ class ScrollerView(QFrame):
     def _next_page(self) -> int:
         pixels = self.model.next_page()
         self.page.scroll_to_value(pixels)
-        self.side_bar.change_page_in_changer(self.model.page_number_index + 1)
-
-        self.top_bar.page.update_current(self.model.page_number_index + 1)
+        self._go_to_page_index(self.model.page_number_index)
         return self.model.page_number_index
 
     def _prev_page(self) -> int:
         pixels = self.model.prev_page()
         self.page.scroll_to_value(pixels)
-        self.side_bar.change_page_in_changer(self.model.page_number_index + 1)
-
-        self.top_bar.page.update_current(self.model.page_number_index + 1)
+        self._go_to_page_index(self.model.page_number_index)
         return self.model.page_number_index
 
     def load_manga(self, image_paths: list[Path]) -> None:
@@ -119,6 +124,8 @@ class ScrollerView(QFrame):
         _, scaled_images = self.model.create_images()
         self.page.load_pages(scaled_images)
         self.page.scroll_to_value(0)
-        self.side_bar.change_page_in_changer(1)
+
+        self.side_bar.set_page_count(len(image_paths))
+        self.side_bar.set_current_page_number(1)
 
         self.top_bar.page.update_limit(len(image_paths))
