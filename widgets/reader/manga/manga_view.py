@@ -51,8 +51,10 @@ class MangaView(QFrame):
         self.top_bar.navigate_back.connect(self.navigate_back.emit)
 
         self.page.page_clicked.connect(self.evaluate_change_page_on_click)
+
         self.side_bar.prev_page.connect(self._prev_page)
         self.side_bar.next_page.connect(self._next_page)
+        self.side_bar.navigate_page_index.connect(self._go_to_page_index)
 
         self.main_layout.addWidget(self.top_bar)
 
@@ -113,17 +115,21 @@ class MangaView(QFrame):
         return page_number_index
 
     def _go_to_page_index(self, index: int) -> None:
+        self.model.page_number_index = index
         self.page.change_page(self.model.image_paths[index])
         self.bottom_bar.set_bar_filled_count(index + 1)
         self.top_bar.page.update_current(index + 1)
-        self.side_bar.change_page_in_changer(index + 1)
+        self.side_bar.set_current_page_number(index + 1)
 
     def load_manga(self, image_paths: list[Path]) -> None:
         self.model.load_manga(image_paths)
 
         self.top_bar.page.update_limit(len(image_paths))
+
         self.bottom_bar.set_bar_total_count(len(image_paths))
         self.bottom_bar.set_bar_filled_count(1)
-        self.side_bar.change_page_in_changer(1)
+
+        self.side_bar.set_current_page_number(1)
+        self.side_bar.set_page_count(len(image_paths))
 
         self.page.change_page(self.model.image_paths[0])
