@@ -9,21 +9,11 @@ class TestScrollerReaderModel(unittest.TestCase):
     def setUpClass(cls):
         cls._base_model = ScrollerModel()
         cls._base_model.image_paths = [
-            Path(
-                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
-            ),
-            Path(
-                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
-            ),
-            Path(
-                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
-            ),
-            Path(
-                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
-            ),
-            Path(
-                "/home/zach/Desktop/python/reader/assets/test/SMALL_scroller_page.png"
-            ),
+            Path("./assets/test/scroller_page_1.png"),
+            Path("./assets/test/scroller_page_2.png"),
+            Path("./assets/test/scroller_page_3.png"),
+            Path("./assets/test/scroller_page_4.png"),
+            Path("./assets/test/scroller_page_5.png"),
         ]
         cls._base_model.page_number_index = 2
         cls._base_model.create_images()
