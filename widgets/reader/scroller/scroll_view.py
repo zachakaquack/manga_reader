@@ -50,6 +50,9 @@ class ScrollerView(QFrame):
 
         self.page.scroll_amount_changed.connect(self.change_scrolled_page)
 
+        self.side_bar.prev_page.connect(self._prev_page)
+        self.side_bar.next_page.connect(self._next_page)
+
         self.main_layout.addWidget(self.top_bar)
 
         # thge layout that holds the main page and the menu

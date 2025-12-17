@@ -51,6 +51,9 @@ class MangaView(QFrame):
         self.top_bar.navigate_back.connect(self.navigate_back.emit)
 
         self.page.page_clicked.connect(self.evaluate_change_page_on_click)
+        self.side_bar.prev_page.connect(self._prev_page)
+        self.side_bar.next_page.connect(self._next_page)
+
         self.main_layout.addWidget(self.top_bar)
 
         # thge layout that holds the main page, menu, and bottom bar
