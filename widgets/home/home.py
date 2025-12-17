@@ -24,19 +24,19 @@ class Home(QFrame):
         )
 
         manga_pages = [
-            Path("./assets/test/manga_page.png"),
-            Path("./assets/test/manga_page.png"),
-            Path("./assets/test/manga_page.png"),
-            Path("./assets/test/manga_page.png"),
-            Path("./assets/test/manga_page.png"),
+            Path("./assets/test/manga_page_1.png"),
+            Path("./assets/test/manga_page_2.png"),
+            Path("./assets/test/manga_page_3.png"),
+            Path("./assets/test/manga_page_4.png"),
+            Path("./assets/test/manga_page_5.png"),
         ]
 
         scroller_pages = [
-            Path("./assets/test/scroller_page.png"),
-            Path("./assets/test/scroller_page.png"),
-            Path("./assets/test/scroller_page.png"),
-            Path("./assets/test/scroller_page.png"),
-            Path("./assets/test/scroller_page.png"),
+            Path("./assets/test/scroller_page_1.png"),
+            Path("./assets/test/scroller_page_2.png"),
+            Path("./assets/test/scroller_page_3.png"),
+            Path("./assets/test/scroller_page_4.png"),
+            Path("./assets/test/scroller_page_5.png"),
         ]
 
         test_manga = Button("test manga")
