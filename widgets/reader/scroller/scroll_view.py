@@ -6,7 +6,7 @@ from widgets.reader.scroller.scroll_model import ScrollerModel
 from widgets.reader.scroller.scroller_page import ScrollerPage
 from widgets.reader.top_bar import ReaderTopBar
 from pathlib import Path
-from widgets.reader.side_bar import SideBar
+from widgets.reader.side_bar.side_bar import SideBar
 
 
 class ScrollerView(QFrame):
