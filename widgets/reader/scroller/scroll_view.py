@@ -67,6 +67,7 @@ class ScrollerView(QFrame):
     def change_scrolled_page(self, scrolled_pixels: int) -> int:
         new_index = self.model.evaluate_scrolled_page_index(scrolled_pixels)
         self.top_bar.page.update_current(new_index + 1)
+        self.side_bar.change_page_in_changer(new_index + 1)
         return new_index
 
     def _toggle_menu(self) -> None:
@@ -96,6 +97,7 @@ class ScrollerView(QFrame):
     def _next_page(self) -> int:
         pixels = self.model.next_page()
         self.page.scroll_to_value(pixels)
+        self.side_bar.change_page_in_changer(self.model.page_number_index + 1)
 
         self.top_bar.page.update_current(self.model.page_number_index + 1)
         return self.model.page_number_index
@@ -103,6 +105,7 @@ class ScrollerView(QFrame):
     def _prev_page(self) -> int:
         pixels = self.model.prev_page()
         self.page.scroll_to_value(pixels)
+        self.side_bar.change_page_in_changer(self.model.page_number_index + 1)
 
         self.top_bar.page.update_current(self.model.page_number_index + 1)
         return self.model.page_number_index
@@ -116,5 +119,6 @@ class ScrollerView(QFrame):
         _, scaled_images = self.model.create_images()
         self.page.load_pages(scaled_images)
         self.page.scroll_to_value(0)
+        self.side_bar.change_page_in_changer(1)
 
         self.top_bar.page.update_limit(len(image_paths))

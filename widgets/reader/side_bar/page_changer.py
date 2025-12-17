@@ -25,11 +25,11 @@ class PageChanger(QFrame):
         settings = load_settings()
 
         decrement = Button("<")
-        page_button = Button("Page 123")
+        self.page_button = Button("Page 123")
         increment = Button(">")
 
         decrement.clicked.connect(self.decrement)
-        page_button.clicked.connect(lambda: self.switch_to_big_view.emit("page"))
+        self.page_button.clicked.connect(lambda: self.switch_to_big_view.emit("page"))
         increment.clicked.connect(self.increment)
 
         # TODO: maybe change to not be fixed? has to be fixed due
@@ -37,7 +37,7 @@ class PageChanger(QFrame):
         decrement.setFixedWidth(settings.side_bar.arrow_button_fixed_width)
         increment.setFixedWidth(settings.side_bar.arrow_button_fixed_width)
 
-        for button in [decrement, page_button, increment]:
+        for button in [decrement, self.page_button, increment]:
             button.setFixedHeight(settings.side_bar.button_height)
             button.setSizePolicy(
                 QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum

@@ -40,8 +40,11 @@ class SideBar(QFrame):
             Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
         )
 
-        page_changer = PageChanger()
-        page_changer.decrement.connect(self.prev_page)
-        page_changer.increment.connect(self.next_page)
+        self.page_changer = PageChanger()
+        self.page_changer.decrement.connect(self.prev_page)
+        self.page_changer.increment.connect(self.next_page)
 
-        self.main_layout.addWidget(page_changer)
+        self.main_layout.addWidget(self.page_changer)
+
+    def change_page_in_changer(self, number: int):
+        self.page_changer.page_button.setText(f"Page {number}")

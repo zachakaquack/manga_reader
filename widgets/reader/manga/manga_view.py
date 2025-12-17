@@ -116,6 +116,7 @@ class MangaView(QFrame):
         self.page.change_page(self.model.image_paths[index])
         self.bottom_bar.set_bar_filled_count(index + 1)
         self.top_bar.page.update_current(index + 1)
+        self.side_bar.change_page_in_changer(index + 1)
 
     def load_manga(self, image_paths: list[Path]) -> None:
         self.model.load_manga(image_paths)
@@ -123,5 +124,6 @@ class MangaView(QFrame):
         self.top_bar.page.update_limit(len(image_paths))
         self.bottom_bar.set_bar_total_count(len(image_paths))
         self.bottom_bar.set_bar_filled_count(1)
+        self.side_bar.change_page_in_changer(1)
 
         self.page.change_page(self.model.image_paths[0])
