@@ -1,10 +1,16 @@
+from PySide6.QtCore import Signal
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QFrame, QSizePolicy, QVBoxLayout
 
 from settings.loader import load_settings
+from widgets.reader.side_bar.page_changer import PageChanger
 
 
 class SideBar(QFrame):
+
+    next_page = Signal()
+    prev_page = Signal()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
@@ -33,3 +39,9 @@ class SideBar(QFrame):
         self.main_layout.setAlignment(
             Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
         )
+
+        page_changer = PageChanger()
+        page_changer.decrement.connect(self.prev_page)
+        page_changer.increment.connect(self.next_page)
+
+        self.main_layout.addWidget(page_changer)
